@@ -2,10 +2,10 @@ package com.ManticCafe.chat_expansion.common.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-public class serverConfig {
+public class commonConfig {
     public final ForgeConfigSpec.BooleanValue displayitem;
 
-    public serverConfig(ForgeConfigSpec.Builder builder) {
+    public commonConfig(ForgeConfigSpec.Builder builder) {
         builder.comment("服务端配置");
 
         builder.push("物品展示功能");

@@ -6,7 +6,7 @@ public class commonConfig {
     public final ForgeConfigSpec.BooleanValue displayitem;
 
     public commonConfig(ForgeConfigSpec.Builder builder) {
-        builder.comment("服务端配置");
+        builder.comment("公共配置");
 
         builder.push("物品展示功能");
         displayitem = builder

@@ -27,7 +27,7 @@ public class configManager {
     public static void register() {
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CLIENT_SPEC, "ManticCafe/chat_expansion/clientConfig.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON_SPEC, "ManticCafe/chat_expansion/serverConfig.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON_SPEC, "ManticCafe/chat_expansion/commonConfig.toml");
 
     }
 }

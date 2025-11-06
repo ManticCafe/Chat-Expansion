@@ -1,5 +1,6 @@
 package com.ManticCafe.chat_expansion;
 
+import com.ManticCafe.chat_expansion.common.config.configManager;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -18,7 +19,7 @@ public class main {
 
         LOGGER.info("Starting mod initialization...");
 
-//        configManager.register();
+        configManager.register();
 //        entityhandler.register(modEventBus);
 //        itemhandler.register(modEventBus);
 //        tabhandler.register(modEventBus);

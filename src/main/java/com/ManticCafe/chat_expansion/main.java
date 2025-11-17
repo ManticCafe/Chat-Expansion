@@ -8,6 +8,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
+
+
 @Mod(main.MODID)
 public class main {
     public static final String MODID = "chat_expansion";

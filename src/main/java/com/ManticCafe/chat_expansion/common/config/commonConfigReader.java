@@ -9,4 +9,8 @@ public class commonConfigReader {
         return configManager.COMMON.displayitem.get();
     }
 
+    public static int getMaxChatChar() {
+        return configManager.COMMON.maxChatChar.get();
+    }
+
 }

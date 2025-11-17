@@ -3,6 +3,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 version = mod_version
@@ -73,6 +74,8 @@ minecraft {
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 "${mod_id}" {
@@ -87,12 +90,18 @@ minecraft {
 
             property 'mixin.env.remapRefMap', 'true'//玉
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"//玉
+            args '-mixin.config=chat_expansion.mixins.json'
+            property 'forge.enabledGameTestNamespaces', mod_id
+            args '--username', 'Dev', '--mixin.config', 'chat_expansion.mixins.json'
         }
 
         server {
             property 'forge.enabledGameTestNamespaces', mod_id
             args '--nogui'
+            property 'mixin.env.remapRefMap', 'true'
+            args '--nogui', '--mixin.config', 'chat_expansion.mixins.json'
         }
+
 
         // This run config launches GameTestServer and runs all registered gametests, then exits.
         // By default, the server will crash when no gametests are provided.
@@ -149,6 +158,7 @@ repositories {
     maven{ url= 'https://maven.aliyun.com/repository/central/'}
     maven{ url= 'https://maven.aliyun.com/repository/qradle-plugin/'}
     maven{ url= 'https://maven.aliyun.com/repository/forqe/'}
+    maven{ url= "https://maven.shedaniel.me/" }
 }
 
 dependencies {
@@ -168,6 +178,11 @@ dependencies {
 //    compileOnly fg.deobf("mezz.jei:jei-1.20.1-common-api:15.2.0.27")//jei
 //    compileOnly fg.deobf("mezz.jei:jei-1.20.1-forge-api:15.2.0.27")//jie
     runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:15.2.0.27")//jei
+    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:11.1.136")
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+
 
 //    runtimeOnly fg.deobf("maven.modrinth:jade:11.13.2+forge")//玉
 
@@ -210,7 +225,10 @@ tasks.named('jar', Jar).configure {
                 'Implementation-Title'    : project.name,
                 'Implementation-Version'  : project.jar.archiveVersion,
                 'Implementation-Vendor'   : mod_authors,
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
+                'TweakOrder': 0,
+                'MixinConfigs': 'chat_expansion.mixins.json'
         ])
     }
 
@@ -244,4 +262,11 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+mixin {
+    add sourceSets.main, "chat_expansion.refmap.json"
+    config "chat_expansion.mixins.json"
+    debug.verbose = true
+    debug.export = true
 }
